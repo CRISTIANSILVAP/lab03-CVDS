@@ -2,8 +2,11 @@ package edu.eci.cvds.tdd.library;
 
 import edu.eci.cvds.tdd.library.book.Book;
 import edu.eci.cvds.tdd.library.loan.Loan;
+import edu.eci.cvds.tdd.library.loan.LoanStatus;
 import edu.eci.cvds.tdd.library.user.User;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,10 +61,58 @@ public class Library {
      */
     public Loan loanABook(String userId, String isbn) {
         //TODO Implement the login of loan a book to a user based on the UserId and the isbn.
+        if(verificateBook(isbn) && verificateUser(userId) && verificateLoans(userId)) {
+            Loan loan = new Loan();
+            for(User user : users) {
+                if (user.getId().equals(userId)) {
+                    loan.setUser(user);
+                }
+            }
+            for (Book book : books.keySet()) {
+                if (book.getIsbn().equals(isbn)) {
+                    loan.setBook(book);
+                }
+            }
+            loan.setStatus(LoanStatus.ACTIVE);
+            loan.setLoanDate(LocalDateTime.now());
+            loans.add(loan);
+            return loan;
 
-
+        }
         return null;
+
     }
+
+    private boolean verificateUser(String userId){
+        for(User user : users) {
+            if (user.getId().equals(userId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean verificateBook(String isbn){
+        for (Book book : books.keySet()) {
+            if (book.getIsbn().equals(isbn)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean verificateLoans(String userId){
+        for(User user : users) {
+            if (user.getId().equals(userId)) {
+                for(Loan loan : loans) {
+                    if (loan.getStatus() == LoanStatus.ACTIVE) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
 
     /**
      * This method return a loan, meaning that the amount of books should be increased by 1, the status of the Loan

@@ -2,10 +2,9 @@ package edu.eci.cvds.tdd.library;
 
 import edu.eci.cvds.tdd.library.book.Book;
 import edu.eci.cvds.tdd.library.loan.Loan;
-import edu.eci.cvds.tdd.library.loan.LoanStatus;
 import edu.eci.cvds.tdd.library.user.User;
+import edu.eci.cvds.tdd.library.loan.LoanStatus;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +60,10 @@ public class Library {
      */
     public Loan loanABook(String userId, String isbn) {
         //TODO Implement the login of loan a book to a user based on the UserId and the isbn.
-        if(verificateBook(isbn) && verificateUser(userId) && verificateLoans(userId)) {
+        if(userId!=null && isbn!=null &&verificateUser(userId) && verificateBook(isbn)) {
+            if(!verificateLoans(userId, isbn)){
+                return null;
+            };
             Loan loan = new Loan();
             for(User user : users) {
                 if (user.getId().equals(userId)) {
@@ -71,6 +73,7 @@ public class Library {
             for (Book book : books.keySet()) {
                 if (book.getIsbn().equals(isbn)) {
                     loan.setBook(book);
+                    books.put(book, books.get(book) - 1);
                 }
             }
             loan.setStatus(LoanStatus.ACTIVE);
@@ -88,22 +91,22 @@ public class Library {
             if (user.getId().equals(userId)) {
                 return true;
             }
-        }
+        }System.out.println("no hay usuraio");
         return false;
     }
     private boolean verificateBook(String isbn){
         for (Book book : books.keySet()) {
-            if (book.getIsbn().equals(isbn)) {
+            if (book.getIsbn().equals(isbn) ) {
                 return true;
             }
         }
         return false;
     }
-    private boolean verificateLoans(String userId){
+    private boolean verificateLoans(String userId,String isbn){
         for(User user : users) {
             if (user.getId().equals(userId)) {
                 for(Loan loan : loans) {
-                    if (loan.getStatus() == LoanStatus.ACTIVE) {
+                    if (loan.getUser().equals(userId) && loan.getBook().equals(isbn) && loan.getStatus().equals(LoanStatus.ACTIVE)) {
                         return false;
                     }
                 }
@@ -112,8 +115,6 @@ public class Library {
 
         return true;
     }
-
-
     /**
      * This method return a loan, meaning that the amount of books should be increased by 1, the status of the Loan
      * in the loan list should be {@link edu.eci.cvds.tdd.library.loan.LoanStatus#RETURNED} and the loan return
@@ -124,12 +125,25 @@ public class Library {
      * @return the loan with the RETURNED status.
      */
     public Loan returnLoan(Loan loan) {
-        //TODO Implement the login of loan a book to a user based on the UserId and the isbn.
+        for (Loan l : loans) {
+            if (l.equals(loan)){
+                l.setStatus(LoanStatus.RETURNED);
+                l.setReturnDate(LocalDateTime.now());
+                Book book = l.getBook();
+                books.put(book, books.get(book) + 1);
+            }
+        }
         return null;
     }
 
     public boolean addUser(User user) {
         return users.add(user);
     }
+
+    public Map<Book, Integer> getBooks() {
+        return books;
+    }
+
+
 
 }

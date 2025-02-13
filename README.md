@@ -1,7 +1,7 @@
 # lab03-CVDS
 # Integrantes 
+
   Juan miguel Rojas Chaparro 
-  
   Cristian David Silva perilla
 
 ## CREAR PROYECTO CON MAVEN
@@ -35,23 +35,32 @@ Para esta parte se agregan las dependencias de JUNIT con los paquetes en las ver
 para esta parte de las pruebas unitarias es necesario crear nuestro repositorio donde sobre este se van a estar desarrollando 2 ramas en las cuales trabajaremos y verificaremos nuestros test mediante pull request 
 
 ![imagenes](imagenes/5.png)
+
 ![imagenes](imagenes/6.png)
 
 métodos auxiliares para el método loanBook
 
 ![imagenes](imagenes/7.png)
+
 ![imagenes](imagenes/8.png)
+
 ![imagenes](imagenes/9.png)
+
 ![imagenes](imagenes/10.png)
+
 ![imagenes](imagenes/11.png)
+
 ![imagenes](imagenes/12.png)
+
 ![imagenes](imagenes/13.png)
 
 
 ## CREAR LA CLASE DE PRUEBA 
 
 ![imagenes](imagenes/14.png)
+
 ![imagenes](imagenes/15.png)
+
 ![imagenes](imagenes/16.png)
 
 ## COBERTURA
@@ -60,6 +69,7 @@ Agregar la dependencia de jacoco, utilizar la última versión disponible en mav
 Para usar Jacoco es necesario agregar la siguiente sección en el pom.xml
 
 ![imagenes](imagenes/17.png)
+
 ![imagenes](imagenes/18.png)
 
 Como se puede observar jacoco nos dice que nuestras prueba tienen más de un 80 por ciento en cobertura teniendo un 90 por ciento para la clase solicitada
@@ -78,5 +88,13 @@ Instale sonarLint en el IDE que esté manejando.
 Añada el plugin de Sonar en el archivo pom del proyecto.
 
 ![imagenes](imagenes/19.png)
+
 ![imagenes](imagenes/20.png)
+
 ![imagenes](imagenes/21.png)
+
+![imagenes](imagenes/22.png)
+
+![imagenes](imagenes/23.png)
+
+![imagenes](imagenes/24.png)
